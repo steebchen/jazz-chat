@@ -9,6 +9,7 @@ export default async function SharedChatPage(props: {
   const chat = await SharedChat.load(chatId, {
     loadAs: jazzSSR,
   });
+  console.log('chat', chat);
 
   if (!chat) {
     return (
@@ -32,4 +33,4 @@ export default async function SharedChatPage(props: {
       <Chat initialMessages={messages} readOnly />
     </main>
   );
-} 
+}

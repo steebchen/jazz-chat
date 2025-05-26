@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAccount } from 'jazz-react';
-import { Account } from 'jazz-tools';
+import { Account, co } from 'jazz-tools';
 import { useRouter } from 'next/navigation';
-import { SharedChat } from '@/app/models/SharedChat';
+import { SharedChat } from "@/app/models/SharedChat";
 
 interface Message {
   id: string;
@@ -36,11 +36,18 @@ export default function Chat({ initialMessages = [], readOnly = false }: ChatPro
 
   const handleShare = async () => {
     if (!me) return;
+    console.log('me', me);
 
     const sharedChat = SharedChat.create({
+      messages: JSON.stringify(messages.map(({ role, content }) => ({
+        role: role as string,
+        content,
+      }))),
+    }, {
       owner: me,
-      messages: messages.map(({ role, content }) => ({ role, content })),
     });
+
+    console.log('sharedChat', sharedChat);
 
     const url = `${window.location.origin}/chat/${sharedChat.id}`;
     setShareUrl(url);

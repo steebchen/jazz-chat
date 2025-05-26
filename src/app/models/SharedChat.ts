@@ -1,7 +1,5 @@
-import { CoMap } from "jazz-tools";
-import { Account } from "jazz-tools";
+import { co, z } from "jazz-tools";
 
-export class SharedChat extends CoMap {
-  owner!: Account;
-  messages!: Array<{ role: string; content: string }>;
-} 
+export const SharedChat = co.map({
+  messages: z.string(),
+});

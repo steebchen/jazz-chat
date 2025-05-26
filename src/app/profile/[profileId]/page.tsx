@@ -9,6 +9,8 @@ export default async function ServerSidePage(props: {
     loadAs: jazzSSR,
   });
 
+  console.log('profile', profile);
+
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-4">
       <h1 className="text-2xl font-bold">SSR rendering example with Jazz</h1>
