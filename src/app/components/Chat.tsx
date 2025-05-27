@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAccount } from 'jazz-react';
-import { Account, co } from 'jazz-tools';
+import { Account, co, Group } from "jazz-tools";
 import { useRouter } from 'next/navigation';
 import { SharedChat } from "@/app/models/SharedChat";
 
-interface Message {
+export interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
@@ -38,13 +38,16 @@ export default function Chat({ initialMessages = [], readOnly = false }: ChatPro
     if (!me) return;
     console.log('me', me);
 
+    const group = Group.create(me);
+    group.addMember("everyone", "reader");
+
     const sharedChat = SharedChat.create({
       messages: JSON.stringify(messages.map(({ role, content }) => ({
         role: role as string,
         content,
       }))),
     }, {
-      owner: me,
+      owner: group,
     });
 
     console.log('sharedChat', sharedChat);

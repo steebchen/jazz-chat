@@ -1,6 +1,6 @@
 import { jazzSSR } from "@/jazzSSR";
 import { SharedChat } from "@/app/models/SharedChat";
-import Chat from "@/app/components/Chat";
+import Chat, { Message } from "@/app/components/Chat";
 
 export default async function SharedChatPage(props: {
   params: Promise<{ chatId: string }>;
@@ -22,7 +22,8 @@ export default async function SharedChatPage(props: {
     );
   }
 
-  const messages = chat.messages.map((msg, index) => ({
+  const msg = JSON.parse(chat.messages) as Message[];
+  const messages = msg.map((msg, index) => ({
     id: index.toString(),
     role: msg.role as 'user' | 'assistant',
     content: msg.content,
